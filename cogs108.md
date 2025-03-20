@@ -1,114 +1,166 @@
-# Project Proposal: Data-Driven Market State Assessment  
-**Identifying Market Trends and Risk Levels Using Quantitative Analysis**
-
-## 1. NAMES  
-- **Group Member 1:** Bohang Kang  
-- **Group Member 2:** Mukund Dittakavi  
-- **Group Member 3:** Mark Sui  
-- **Group Member 4:** Tianyu Li  
-- **Group Member 5:** Pranshu Gupta  
+明白！你是想搞清楚：**看到什么题目，用什么方法、什么公式来解题。**  
+这张表给你全梳理清楚，按“题目特征”和“解法公式”分类整理。
 
 ---
 
-## 2. RESEARCH QUESTION  
-**How can we quantitatively classify the overall state of financial markets using historical price and volatility data?**  
-
-Specifically:  
-1. What are the key indicators that best define market trends (bullish, bearish, or neutral)?  
-2. Can we develop a simple scoring system to assess the risk level of the market?  
-3. How do historical trends in volatility relate to different market phases?  
-
-This research aims to provide a **data-driven approach** to evaluating market conditions, assisting investors and policymakers in making informed decisions.
+## 🔥 【最详细公式和方法对照表】🔥  
+> 只要记住“**什么时候**用”+“**怎么用**”，  
+> 看题目特征直接用，不用纠结！
 
 ---
 
-## 3. BACKGROUND  
-Financial markets are constantly evolving, and identifying the overall market state is essential for investors and institutions. Traditionally, market conditions have been assessed subjectively through news sentiment, economic reports, and price charts. However, with the increasing availability of data, **quantitative approaches** have gained prominence.
+# ✅ **一、数列极限相关**
 
-### Key concepts in prior research:  
-#### 1. Market Volatility as a Risk Indicator  
-- The **VIX Index (CBOE Volatility Index)** is widely used as a measure of market fear and uncertainty. Higher VIX values are historically associated with bear markets and economic downturns (**Whaley, 2000**).  
-- Research shows that **market volatility often spikes before major market corrections** (**Giot, 2005**).
-
-#### 2. Market Regimes and State Classification  
-- Financial markets tend to alternate between distinct phases: **bullish (growth), bearish (decline), and neutral (sideways trading)**.  
-- Some studies use **Hidden Markov Models (HMMs) and clustering methods** to identify these regimes (**Ang & Timmermann, 2012**).
-
-#### 3. Simple Market Trend Indicators  
-- **Moving averages (50-day and 200-day)** have historically been used to indicate trends (**Fama & French, 1988**).  
-- **Momentum-based indicators** like MACD and RSI have been used in previous works to study market movement (**Jegadeesh & Titman, 1993**).
-
-While prior studies provide valuable insights, many rely on **complex statistical models** that are difficult to interpret for everyday investors.  
-Our project seeks to build a **simpler and interpretable model** to assess market conditions using volatility, price movements, and technical indicators.
-
-### References  
-1. Whaley, R. E. (2000). The Investor Fear Gauge. *Journal of Portfolio Management, 26(3), 12-17.*  
-2. Giot, P. (2005). Implied volatility indexes and daily stock market returns. *Journal of Derivatives, 12(4), 54-64.*  
-3. Ang, A., & Timmermann, A. (2012). Regime Changes and Financial Markets. *Annual Review of Financial Economics, 4, 313-337.*  
-4. Fama, E. F., & French, K. R. (1988). Permanent and Temporary Components of Stock Prices. *Journal of Political Economy, 96(2), 246-273.*  
-5. Jegadeesh, N., & Titman, S. (1993). Returns to Buying Winners and Selling Losers: Implications for Stock Market Efficiency. *Journal of Finance, 48(1), 65-91.*  
+| **题目特征**                         | **用的公式/定理**                  | **怎么判断/套用**                                            |
+|--------------------------------------|-------------------------------------|-------------------------------------------------------------|
+| 判断极限是否存在                    | **定义法（ε-N 定义）**             | 写：“给定 ε>0，找 N，使 n>N 时 |aₙ-L|<ε”                 |
+| 已知单调递增/递减且有界             | **单调有界收敛定理**               | 单调 + 有界 ⇒ 一定收敛                                      |
+| 只知道有界                          | **无法直接判收敛！**               | 继续用 Bolzano-Weierstrass、Cauchy 等                       |
+| 有界 ⇒ 存在收敛子列                 | **Bolzano-Weierstrass 定理**        | 任意有界序列 ⇒ 有收敛子列                                   |
+| 问 Cauchy 是否收敛                  | **Cauchy 判别法**                  | Cauchy 序列 ⇒ 一定收敛（在实数域）                         |
 
 ---
 
-## 4. HYPOTHESIS  
-- **Financial markets exhibit distinguishable states** (bullish, bearish, or neutral) that can be quantified using volatility and trend indicators.  
-- **Periods of extreme volatility often precede significant market corrections** (e.g., crashes or recessions).  
-- A **market risk scoring system** based on volatility and momentum indicators can provide an **early warning for high-risk market conditions**.
+# ✅ **二、级数收敛**
+
+| **题目特征**                        | **用的公式/定理**                        | **怎么判断/套用**                                                |
+|-------------------------------------|-------------------------------------------|-----------------------------------------------------------------|
+| 问级数 \( \sum a_n \) 是否收敛     | **第一个检查**                           | 先看 \( \lim a_n \to 0 \)，不为 0 则直接发散                   |
+| 正项级数 + 大小比较                | **比较判别法**（Comparison Test）        | \( a_n \le b_n \)，b 收敛 ⇒ a 收敛                              |
+| 正项级数 + 形状像 \( 1/n^p \)     | **p-级数比较**                           | p>1 ⇒ 收敛，p≤1 ⇒ 发散                                          |
+| 有比值（aₙ₊₁ / aₙ）               | **比值检验**（Ratio Test）               | \( L = \lim |a_{n+1}/a_n| \)<1 ⇒ 收敛；>1 或 ∞ ⇒ 发散         |
+| 有 n 次根（\( n \)-次方根）        | **根值检验**（Root Test）                | \( L = \lim \sqrt[n]{|a_n|} \)<1 ⇒ 收敛；>1 ⇒ 发散             |
+| 交错正负符号（例如 \( (-1)^n \)）  | **交错级数检验**（Alternating Series Test） | \( a_n \) 单调递减且趋 0 ⇒ 收敛（条件收敛）                   |
+| \( a_n = f(n) \)，f 连续单调正     | **积分检验**（Integral Test）            | \( \int f(x) dx \) 收敛 ⇔ \( \sum a_n \) 收敛                 |
+| 绝对收敛？                         | **绝对收敛与条件收敛**                   | \( \sum |a_n| \) 收敛 ⇒ 绝对收敛；否则条件收敛                 |
+| 级数表达式复杂                    | **先看主要项行为**                       | 比如 \( n^2 a_n \to l \)，推测 \( a_n \sim 1/n^2 \)             |
 
 ---
 
-## 5. DATA  
+# ✅ **三、连续和一致连续**
 
-| **Type**               | **Source**                    | **Variables**                                      |
-|------------------------|------------------------------|----------------------------------------------------|
-| **Stock & Futures Prices** | Yahoo Finance, AkShare      | Open, High, Low, Close (OHLC), Volume              |
-| **Market Volatility**  | VIX (CBOE Volatility Index)  | VIX levels, historical volatility                  |
-| **Macroeconomic Data** | FRED, IMF                    | Interest rates, GDP growth, inflation              |
-| **Market Indicators**  | Technical Indicators         | Moving Averages, RSI, MACD                         |
-
----
-
-## 6. ETHICS & PRIVACY CONSIDERATIONS  
-
-### 1. Bias & Fairness  
-- **Data is sourced from publicly available financial datasets**, eliminating privacy concerns.  
-- However, our dataset **may be biased toward developed markets** (e.g., S&P 500, Nasdaq) and exclude emerging market trends.
-
-### 2. Terms of Use & Transparency  
-- Ensure **compliance** with API usage limits and data provider policies.  
-- Clearly **document data sources and methodology** in our final report.
-
-### 3. Potential Limitations & Mitigation Strategies  
-- **Historical data may not fully represent future market behavior.**  
-  - We will acknowledge this limitation and avoid overfitting models.  
-- **Outlier events (e.g., COVID-19 crash) could distort results.**  
-  - We will conduct robustness checks to mitigate this issue.
+| **题目特征**                                | **用的公式/定理**                     | **怎么判断/套用**                                           |
+|---------------------------------------------|----------------------------------------|--------------------------------------------------------------|
+| 问是否连续                                 | **连续定义（ε-δ 定义）**              | 给定 ε>0，找 δ，使 |x-a|<δ ⇒ |f(x)-f(a)|<ε                 |
+| 问是否一致连续                             | **一致连续定义（ε-δ 定义）**          | 给定 ε>0，找 δ，使所有 x,y 都满足 |x-y|<δ ⇒ |f(x)-f(y)|<ε   |
+| 闭区间上连续                               | **闭区间连续 ⇒ 一致连续**（定理）     | 连续 + 闭区间 [a,b] ⇒ 一致连续                              |
+| 问 Lipschitz 函数是否一致连续             | **Lipschitz ⇒ 一致连续**（经典）      | \( |f(x)-f(y)| \le C|x-y| \) ⇒ 一致连续                     |
+| f(x) = 1/x, x → 0 附近                     | **连续但不一致连续（反例经典）**      | 越靠近 0，越剧烈，不一致连续                                |
+| f(x) 的导数有界                            | **Lipschitz 条件**                    | \( |f'(x)| \le M \) ⇒ Lipschitz ⇒ 一致连续                  |
 
 ---
 
-## 7. DATA ANALYSIS APPROACH  
-- **Collaboration & Communication:** Weekly check-ins to track progress.  
-- **Workload Distribution:** Each member contributes to both analysis and documentation.  
-- **Conflict Resolution:** Any disagreements will be resolved through discussion and consensus.  
-- **Responsibility:** Members are expected to complete assigned tasks on time.  
+# ✅ **四、Cauchy 数列和收敛**
+
+| **题目特征**                            | **用的公式/定理**                  | **怎么判断/套用**                                               |
+|-----------------------------------------|-------------------------------------|-----------------------------------------------------------------|
+| 问是否 Cauchy 数列                     | **Cauchy 定义**                    | 给定 ε>0，存在 N，使 n,m>N 时 |a_n - a_m|<ε                 |
+| 问 Cauchy 数列是否收敛                 | **在实数域必收敛**                 | 只要是 Cauchy 数列，在 \( \mathbb{R} \) 必收敛                 |
+| 问有界是否收敛                         | **有界不一定收敛！**               | 再查单调性/子列/是否 Cauchy                                    |
 
 ---
 
-## 8. PROJECT TIMELINE PROPOSAL  
+# ✅ **五、极值和介值定理**
 
-| **Date**  | **Task**                                 | **Responsible Member(s)**  |
-|----------|--------------------------------------|---------------------------|
-| Week 1  | Data collection and cleaning        | Tianyu, Pranshu, Mark     |
-| Week 2-3  | Exploratory Data Analysis (EDA)   | Mukund, Tianyu, Pranshu   |
-| Week 4  | Market state classification (bull/bear/neutral) | Velane, Mark, Pranshu  |
-| Week 5  | Market risk scoring system          | Mukund, Mark, Velane     |
-| Week 6  | Model validation & visualization    | Velane, Mukund, Tianyu, Mark |
-| Week 7  | Final report writing & submission   | All Members              |
+| **题目特征**                       | **用的公式/定理**                                 | **怎么判断/套用**                                           |
+|------------------------------------|----------------------------------------------------|-------------------------------------------------------------|
+| 闭区间连续函数是否取得最大最小值  | **最大值最小值定理（Extreme Value Theorem）**     | 闭区间连续 ⇒ 有最大值、最小值                             |
+| 连续函数值变化是否涵盖中间值      | **介值定理（Intermediate Value Theorem）**        | 连续函数 f(a)<0, f(b)>0 ⇒ 存在 c 使 f(c)=0               |
+| 问是否有固定点                    | **固定点定理**                                    | 连续函数 f:[a,b]→[a,b] ⇒ 存在 c 使 f(c)=c                |
 
 ---
 
-## 9. EXPECTED DELIVERABLES  
-- **Dataset** with structured market data.  
-- **Market classification model** (simple rule-based + clustering).  
-- **Market risk scoring system** to quantify risk levels.  
-- **Final report & presentation** summarizing key insights.  
+# ✅ **六、集和子列的极限（高级点）**
+
+| **题目特征**                    | **用的公式/定理**               | **怎么判断/套用**                                           |
+|---------------------------------|----------------------------------|-------------------------------------------------------------|
+| 问 limsup / liminf              | **定义公式**                    | limsup = 上极限，liminf = 下极限                           |
+| 给 limsup, liminf 求极限       | **判断是否相等**                | limsup=liminf=L ⇒ 极限存在，lim a_n=L                      |
+| 问序列是否稠密                 | **稠密集（Dense Set）**         | 有理数稠密于实数                                           |
+| 问是否完备                     | **完备空间定义**                | 所有 Cauchy 数列收敛 ⇒ 完备空间（实数是完备的）          |
+
+---
+
+# ✅ **七、积分与收敛（Integral/Series）**
+
+| **题目特征**                         | **用的公式/定理**                     | **怎么判断/套用**                                           |
+|--------------------------------------|----------------------------------------|-------------------------------------------------------------|
+| 函数积分是否存在                    | **Riemann 积分**                      | 连续函数一定可积                                           |
+| 级数积分判别法                      | **积分检验（Integral Test）**        | f(x) 单调递减正 ⇒ 积分和级数同收敛/发散                   |
+| 函数不连续是否积分                  | **不连续但有限间断点 ⇒ 仍然可积**    | 有限跳跃 OK，太复杂再判定                                  |
+
+---
+
+---
+
+# ✅ 【公式和关键表达式合集】
+
+### 1. 比值检验  
+\[
+L = \lim_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right|
+\]  
+- L < 1 ⇒ 收敛  
+- L > 1 ⇒ 发散  
+- L = 1 ⇒ 不确定
+
+### 2. 根值检验  
+\[
+L = \lim_{n \to \infty} \sqrt[n]{|a_n|}
+\]  
+- L < 1 ⇒ 收敛  
+- L > 1 ⇒ 发散  
+- L = 1 ⇒ 不确定
+
+### 3. 交错级数检验  
+- \( a_n \) 单调递减，\( a_n \to 0 \)  
+- \( \sum (-1)^n a_n \) 收敛
+
+### 4. Cauchy 数列定义  
+\[
+\forall \varepsilon > 0, \exists N, n,m > N \implies |a_n - a_m| < \varepsilon
+\]
+
+### 5. 一致连续定义  
+\[
+\forall \varepsilon > 0, \exists \delta > 0, \forall x,y, |x - y| < \delta \implies |f(x) - f(y)| < \varepsilon
+\]
+
+---
+
+---
+
+# ✅ 【总结口诀，关键记忆法】
+
+| 场景                      | 口诀                           |
+|---------------------------|--------------------------------|
+| 级数是否收敛             | 先看 a_n 是否趋零，不零必发散 |
+| 有 n+1 / n 比例          | 比值判别试一试               |
+| 正项长得像 1/n^p         | p>1 收敛，p≤1 发散           |
+| 函数连续问是否一致连续   | 闭区间上必一致               |
+| 交错正负                 | 递减趋零 ⇒ 收敛              |
+| 极限 limsup liminf       | 相等即极限，大小看尾巴       |
+| 单调有界                 | 必收敛                       |
+| Cauchy 数列              | 实数必收敛                   |
+
+---
+
+---
+
+# ✅ 怎么快速套公式？
+👉 见到题目：  
+- 先看“是不是级数”  
+- 是级数 → 比值/根值/比较/交错/积分  
+- 不是级数 → 看是不是数列  
+  - 单调？  
+  - 有界？  
+  - Cauchy？  
+- 是函数 → 问连续？一致连续？  
+- 是区间 → 问闭区间？极值/介值/固定点？  
+---
+
+---
+
+# ✅ 要练习吗？  
+想试试给你一题，看你选哪个公式？  
+我可以来个“实战反应训练”！  
+或者你拍你不会的题，我告诉你“啥时候用啥”？
