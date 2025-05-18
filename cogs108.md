@@ -1,166 +1,139 @@
-明白！你是想搞清楚：**看到什么题目，用什么方法、什么公式来解题。**  
-这张表给你全梳理清楚，按“题目特征”和“解法公式”分类整理。
-
+---
+title: ECE196 SP25 DHT11 Tutorial
+date: 2025-05-17
+authors:
+  - name: Mark Sui
 ---
 
-## 🔥 【最详细公式和方法对照表】🔥  
-> 只要记住“**什么时候**用”+“**怎么用**”，  
-> 看题目特征直接用，不用纠结！
+![relevant graphic or workshop logo](image/path)
 
----
+## Introduction
+In this tutorial, we will learn how to use a DHT11 sensor with an ESP32 board. We will connect the sensor, read the temperature and humidity, and show the readings on the computer screen. That this can help us to track the indoor environment. By the end, we will know how to add simple sensors to our own projects and knows how the Inter-Integrated Circuit(I2C) works.
+### Learning Objectives
 
-# ✅ **一、数列极限相关**
+* Learn what a DHT11 sensor does
+* Learn how to hook up the DHT11 to an ESP32 board
+* Install Arduino IDE and add ESP32 support
+* Use the DHT library to read sensor data
+* Write and run code to print readings to the screen
+* Learn what is Inter-Integrated Circuit(I2C)
 
-| **题目特征**                         | **用的公式/定理**                  | **怎么判断/套用**                                            |
-|--------------------------------------|-------------------------------------|-------------------------------------------------------------|
-| 判断极限是否存在                    | **定义法（ε-N 定义）**             | 写：“给定 ε>0，找 N，使 n>N 时 |aₙ-L|<ε”                 |
-| 已知单调递增/递减且有界             | **单调有界收敛定理**               | 单调 + 有界 ⇒ 一定收敛                                      |
-| 只知道有界                          | **无法直接判收敛！**               | 继续用 Bolzano-Weierstrass、Cauchy 等                       |
-| 有界 ⇒ 存在收敛子列                 | **Bolzano-Weierstrass 定理**        | 任意有界序列 ⇒ 有收敛子列                                   |
-| 问 Cauchy 是否收敛                  | **Cauchy 判别法**                  | Cauchy 序列 ⇒ 一定收敛（在实数域）                         |
+### Background Information
 
----
+This tutorial is about the DHT11 sensor and how to use it with the ESP32 board. The DHT11 is a small and cheap sensor that can measure temperature and humidity. It sends this data to the ESP32, which then shows it on the computer screen through the Serial Monitor.
 
-# ✅ **二、级数收敛**
+We use the DHT11 because it’s easy to find, low-cost, and simple to use for beginners. There are other sensors like the DHT22 or BME280 that can do the same thing but with better accuracy or extra features. However, the DHT11 is good enough for basic projects.
 
-| **题目特征**                        | **用的公式/定理**                        | **怎么判断/套用**                                                |
-|-------------------------------------|-------------------------------------------|-----------------------------------------------------------------|
-| 问级数 \( \sum a_n \) 是否收敛     | **第一个检查**                           | 先看 \( \lim a_n \to 0 \)，不为 0 则直接发散                   |
-| 正项级数 + 大小比较                | **比较判别法**（Comparison Test）        | \( a_n \le b_n \)，b 收敛 ⇒ a 收敛                              |
-| 正项级数 + 形状像 \( 1/n^p \)     | **p-级数比较**                           | p>1 ⇒ 收敛，p≤1 ⇒ 发散                                          |
-| 有比值（aₙ₊₁ / aₙ）               | **比值检验**（Ratio Test）               | \( L = \lim |a_{n+1}/a_n| \)<1 ⇒ 收敛；>1 或 ∞ ⇒ 发散         |
-| 有 n 次根（\( n \)-次方根）        | **根值检验**（Root Test）                | \( L = \lim \sqrt[n]{|a_n|} \)<1 ⇒ 收敛；>1 ⇒ 发散             |
-| 交错正负符号（例如 \( (-1)^n \)）  | **交错级数检验**（Alternating Series Test） | \( a_n \) 单调递减且趋 0 ⇒ 收敛（条件收敛）                   |
-| \( a_n = f(n) \)，f 连续单调正     | **积分检验**（Integral Test）            | \( \int f(x) dx \) 收敛 ⇔ \( \sum a_n \) 收敛                 |
-| 绝对收敛？                         | **绝对收敛与条件收敛**                   | \( \sum |a_n| \) 收敛 ⇒ 绝对收敛；否则条件收敛                 |
-| 级数表达式复杂                    | **先看主要项行为**                       | 比如 \( n^2 a_n \to l \)，推测 \( a_n \sim 1/n^2 \)             |
+The DHT11 works by using a special chip inside to measure temperature and humidity from the air. It sends this data as a digital signal to the ESP32 through a single data wire.
 
----
+- Digital Signal: The DHT11 sends data using 0s and 1s, so the ESP32 can read it.
 
-# ✅ **三、连续和一致连续**
+- Humidity: How much water vapor is in the air.
 
-| **题目特征**                                | **用的公式/定理**                     | **怎么判断/套用**                                           |
-|---------------------------------------------|----------------------------------------|--------------------------------------------------------------|
-| 问是否连续                                 | **连续定义（ε-δ 定义）**              | 给定 ε>0，找 δ，使 |x-a|<δ ⇒ |f(x)-f(a)|<ε                 |
-| 问是否一致连续                             | **一致连续定义（ε-δ 定义）**          | 给定 ε>0，找 δ，使所有 x,y 都满足 |x-y|<δ ⇒ |f(x)-f(y)|<ε   |
-| 闭区间上连续                               | **闭区间连续 ⇒ 一致连续**（定理）     | 连续 + 闭区间 [a,b] ⇒ 一致连续                              |
-| 问 Lipschitz 函数是否一致连续             | **Lipschitz ⇒ 一致连续**（经典）      | \( |f(x)-f(y)| \le C|x-y| \) ⇒ 一致连续                     |
-| f(x) = 1/x, x → 0 附近                     | **连续但不一致连续（反例经典）**      | 越靠近 0，越剧烈，不一致连续                                |
-| f(x) 的导数有界                            | **Lipschitz 条件**                    | \( |f'(x)| \le M \) ⇒ Lipschitz ⇒ 一致连续                  |
+- Temperature: How hot or cold the air is.
 
----
+This sensor is useful in weather stations, smart homes, and school projects. It’s a great way to learn how to use sensors with microcontrollers.
 
-# ✅ **四、Cauchy 数列和收敛**
+## Getting Started
 
-| **题目特征**                            | **用的公式/定理**                  | **怎么判断/套用**                                               |
-|-----------------------------------------|-------------------------------------|-----------------------------------------------------------------|
-| 问是否 Cauchy 数列                     | **Cauchy 定义**                    | 给定 ε>0，存在 N，使 n,m>N 时 |a_n - a_m|<ε                 |
-| 问 Cauchy 数列是否收敛                 | **在实数域必收敛**                 | 只要是 Cauchy 数列，在 \( \mathbb{R} \) 必收敛                 |
-| 问有界是否收敛                         | **有界不一定收敛！**               | 再查单调性/子列/是否 Cauchy                                    |
+For any software prerequisites, write a simple excerpt on each
+technology the participant will be expecting to download and install.
+Aim to demystify the technologies being used and explain any design
+decisions that were taken. Walk through the installation processes
+in detail. Be aware of any operating system differences.
+For hardware prerequisites, list all the necessary components that
+the participant will receive. A table showing component names and
+quantities should suffice. Link any reference sheets or guides that
+the participant may need.
+The following are stylistic examples of possible prerequisites,
+customize these for each workshop.
 
----
+* **Arduino IDE** installed on your computer
+* **ESP32 board files** added to the Arduino IDE
+* **DHT library** installed in Arduino IDE
 
-# ✅ **五、极值和介值定理**
+1. Go to [https://www.arduino.cc/en/software](https://www.arduino.cc/en/software) and install the Arduino IDE.
+2. Open Arduino IDE, go to *File > Preferences*, and add this URL under *Additional Boards Manager URLs*: `https://dl.espressif.com/dl/package_esp32_index.json`
+3. Go to *Tools > Board > Boards Manager*, search for "ESP32" and install "esp32 by Espressif Systems."
+4. Go to *Sketch > Include Library > Manage Libraries*, search for "DHT sensor library" by Adafruit and install it.
 
-| **题目特征**                       | **用的公式/定理**                                 | **怎么判断/套用**                                           |
-|------------------------------------|----------------------------------------------------|-------------------------------------------------------------|
-| 闭区间连续函数是否取得最大最小值  | **最大值最小值定理（Extreme Value Theorem）**     | 闭区间连续 ⇒ 有最大值、最小值                             |
-| 连续函数值变化是否涵盖中间值      | **介值定理（Intermediate Value Theorem）**        | 连续函数 f(a)<0, f(b)>0 ⇒ 存在 c 使 f(c)=0               |
-| 问是否有固定点                    | **固定点定理**                                    | 连续函数 f:[a,b]→[a,b] ⇒ 存在 c 使 f(c)=c                |
 
----
+### Required Downloads and Installations
 
-# ✅ **六、集和子列的极限（高级点）**
+List any required downloads and installations here.
+Make sure to include tutorials on how to install them.
+You can either make your own tutorials or include a link to them.
 
-| **题目特征**                    | **用的公式/定理**               | **怎么判断/套用**                                           |
-|---------------------------------|----------------------------------|-------------------------------------------------------------|
-| 问 limsup / liminf              | **定义公式**                    | limsup = 上极限，liminf = 下极限                           |
-| 给 limsup, liminf 求极限       | **判断是否相等**                | limsup=liminf=L ⇒ 极限存在，lim a_n=L                      |
-| 问序列是否稠密                 | **稠密集（Dense Set）**         | 有理数稠密于实数                                           |
-| 问是否完备                     | **完备空间定义**                | 所有 Cauchy 数列收敛 ⇒ 完备空间（实数是完备的）          |
 
----
+### Required Components
 
-# ✅ **七、积分与收敛（Integral/Series）**
+List your required hardware components and the quantities here.
 
-| **题目特征**                         | **用的公式/定理**                     | **怎么判断/套用**                                           |
-|--------------------------------------|----------------------------------------|-------------------------------------------------------------|
-| 函数积分是否存在                    | **Riemann 积分**                      | 连续函数一定可积                                           |
-| 级数积分判别法                      | **积分检验（Integral Test）**        | f(x) 单调递减正 ⇒ 积分和级数同收敛/发散                   |
-| 函数不连续是否积分                  | **不连续但有限间断点 ⇒ 仍然可积**    | 有限跳跃 OK，太复杂再判定                                  |
+| Component Name      | Quantity |
+| ------------------- | -------- |
+| ESP32 Dev Board     | 1        |
+| DHT11 Sensor        | 1        |
+| Breadboard          | 1        |
+| Jumper Wires        | 5        |
 
----
 
----
+### Required Tools and Equipment
 
-# ✅ 【公式和关键表达式合集】
+* USB cable for the ESP32
+* A computer with Windows, macOS, or Linux
 
-### 1. 比值检验  
-\[
-L = \lim_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right|
-\]  
-- L < 1 ⇒ 收敛  
-- L > 1 ⇒ 发散  
-- L = 1 ⇒ 不确定
+## Part 01: Name
 
-### 2. 根值检验  
-\[
-L = \lim_{n \to \infty} \sqrt[n]{|a_n|}
-\]  
-- L < 1 ⇒ 收敛  
-- L > 1 ⇒ 发散  
-- L = 1 ⇒ 不确定
+### Introduction
 
-### 3. 交错级数检验  
-- \( a_n \) 单调递减，\( a_n \to 0 \)  
-- \( \sum (-1)^n a_n \) 收敛
+Briefly introduce what  you are teaching in this section.
 
-### 4. Cauchy 数列定义  
-\[
-\forall \varepsilon > 0, \exists N, n,m > N \implies |a_n - a_m| < \varepsilon
-\]
+In this part, you will wire the DHT11 to the ESP32 and run a simple program to read data.
 
-### 5. 一致连续定义  
-\[
-\forall \varepsilon > 0, \exists \delta > 0, \forall x,y, |x - y| < \delta \implies |f(x) - f(y)| < \varepsilon
-\]
+### Objective
 
----
+- Learn how to connect the DHT11 sensor to the ESP32 board
 
----
+- Understand which pins to use for power, ground, and data
 
-# ✅ 【总结口诀，关键记忆法】
+- Upload and run a basic program that reads sensor values
 
-| 场景                      | 口诀                           |
-|---------------------------|--------------------------------|
-| 级数是否收敛             | 先看 a_n 是否趋零，不零必发散 |
-| 有 n+1 / n 比例          | 比值判别试一试               |
-| 正项长得像 1/n^p         | p>1 收敛，p≤1 发散           |
-| 函数连续问是否一致连续   | 闭区间上必一致               |
-| 交错正负                 | 递减趋零 ⇒ 收敛              |
-| 极限 limsup liminf       | 相等即极限，大小看尾巴       |
-| 单调有界                 | 必收敛                       |
-| Cauchy 数列              | 实数必收敛                   |
+- Open the Serial Monitor to see temperature and humidity results
 
----
+- Make sure the code works and can handle errors when the sensor is not working
 
----
 
-# ✅ 怎么快速套公式？
-👉 见到题目：  
-- 先看“是不是级数”  
-- 是级数 → 比值/根值/比较/交错/积分  
-- 不是级数 → 看是不是数列  
-  - 单调？  
-  - 有界？  
-  - Cauchy？  
-- 是函数 → 问连续？一致连续？  
-- 是区间 → 问闭区间？极值/介值/固定点？  
----
+### Background Information
 
----
+Give a brief explanation of the technical skills learned/needed
+in this challenge. There is no need to go into detail as a
+separation document should be prepared to explain more in depth
+about the technical skills
 
-# ✅ 要练习吗？  
-想试试给你一题，看你选哪个公式？  
-我可以来个“实战反应训练”！  
-或者你拍你不会的题，我告诉你“啥时候用啥”？
+### Components
+
+- List the components needed in this challenge
+
+### Instructional
+
+Teach the contents of this section
+
+## Example
+
+### Introduction
+
+Introduce the example that you are showing here.
+
+### Example
+
+Present the example here. Include visuals to help better understanding
+
+### Analysis
+
+Explain how the example used your tutorial topic. Give in-depth analysis of each part and show your understanding of the tutorial topic
+
+## Additional Resources
+
+### Useful links
+
+List any sources you used, documentation, helpful examples, similar projects etc.
