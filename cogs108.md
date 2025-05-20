@@ -5,7 +5,7 @@ authors:
   - name: Mark Sui
 ---
 
-![relevant graphic or workshop logo](image/path)
+
 
 ## Introduction
 In this tutorial, we will learn how to use a DHT11 sensor with an ESP32 board. We will connect the sensor, read the temperature and humidity, and show the readings on the computer screen. That this can help us to track the indoor environment. By the end, we will know how to add simple sensors to our own projects and knows how the Inter-Integrated Circuit(I2C) works.
