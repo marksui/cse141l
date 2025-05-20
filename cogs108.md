@@ -5,7 +5,7 @@ authors:
   - name: Mark Sui
 ---
 
-
+![](MarkSuiPhotos/esp32.webp)
 
 ## Introduction
 In this tutorial, we will learn how to use a DHT11 sensor with an ESP32 board. We will connect the sensor, read the temperature and humidity, and show the readings on the computer screen. That this can help us to track the indoor environment. By the end, we will know how to add simple sensors to our own projects and knows how the Inter-Integrated Circuit(I2C) works.
@@ -41,10 +41,13 @@ This sensor is useful in weather stations, smart homes, and school projects. Itâ
 * **DHT library** installed in Arduino IDE
 
 1. Go to [https://www.arduino.cc/en/software](https://www.arduino.cc/en/software) and install the Arduino IDE.
-2. Open Arduino IDE, go to *File > Preferences*, and add this URL under *Additional Boards Manager URLs*: `https://dl.espressif.com/dl/package_esp32_index.json`
-3. Go to *Tools > Board > Boards Manager*, search for "ESP32" and install "esp32 by Espressif Systems."
-4. Go to *Sketch > Include Library > Manage Libraries*, search for "DHT sensor library" by Adafruit and install it.
+![](MarkSuiPhotos/ard.png)
 
+2. Go to *Tools > Board > Boards Manager*, search for "ESP32" and install "esp32 by Espressif Systems."
+![](MarkSuiPhotos/esp.png)
+
+3. Go to *Sketch > Include Library > Manage Libraries*, search for "DHT sensor library" by Adafruit and install it.
+![](MarkSuiPhotos/dht.png)
 
 ### Required Downloads and Installations
 
