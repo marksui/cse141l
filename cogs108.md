@@ -36,18 +36,6 @@ This sensor is useful in weather stations, smart homes, and school projects. It�
 
 ## Getting Started
 
-For any software prerequisites, write a simple excerpt on each
-technology the participant will be expecting to download and install.
-Aim to demystify the technologies being used and explain any design
-decisions that were taken. Walk through the installation processes
-in detail. Be aware of any operating system differences.
-For hardware prerequisites, list all the necessary components that
-the participant will receive. A table showing component names and
-quantities should suffice. Link any reference sheets or guides that
-the participant may need.
-The following are stylistic examples of possible prerequisites,
-customize these for each workshop.
-
 * **Arduino IDE** installed on your computer
 * **ESP32 board files** added to the Arduino IDE
 * **DHT library** installed in Arduino IDE
@@ -105,35 +93,79 @@ In this part, you will wire the DHT11 to the ESP32 and run a simple program to r
 
 ### Background Information
 
-Give a brief explanation of the technical skills learned/needed
-in this challenge. There is no need to go into detail as a
-separation document should be prepared to explain more in depth
-about the technical skills
+I2C (Inter-Integrated Circuit) is a way for tiny computer parts like sensors and displays to talk to a main chip using just two wires—one for data and one for timing. It lets many devices share the same wires without crashing into each other, like students politely taking turns to speak in class.  The DHT11 needs a pull-up resistor on the data pin and sends data in a timing-based format. Our code waits between readings to keep the data correct.
 
 ### Components
 
-- List the components needed in this challenge
+- ESP32 Dev Board
+- DHT11 Sensor
+- 10 kΩ Resistor
+- Breadboard
+- Jumper Wires
 
 ### Instructional
 
-Teach the contents of this section
+1. Connect VCC on the DHT11 to 3.3 V on the ESP32.
+2. Connect GND on the DHT11 to GND on the ESP32.
+3. Connect the data pin on the DHT11 to GPIO 15 on the ESP32.
+4. Place the 10 kΩ resistor between the data pin and 3.3 V as a pull-up.
+5. Open Arduino IDE. Copy and paste the code below.
+6. Select *ESP32 Dev Module* under *Tools > Board* and the correct port under *Tools > Port*.
+7. Click upload. Then open the Serial Monitor at 115200 baud.
+
+```cpp
+#include "DHT.h"
+
+#define DHTPIN 15
+#define DHTTYPE DHT11
+
+DHT dht(DHTPIN, DHTTYPE);
+
+void setup() {
+  Serial.begin(115200);
+  dht.begin();
+}
+
+void loop() {
+  delay(2000);
+  float h = dht.readHumidity();
+  float t = dht.readTemperature();
+  if (isnan(h) || isnan(t)) {
+    Serial.println("Failed to read sensor");
+    return;
+  }
+  Serial.print("Humidity: ");
+  Serial.print(h);
+  Serial.print(" %  ");
+  Serial.print("Temperature: ");
+  Serial.print(t);
+  Serial.println(" C");
+}
+```
 
 ## Example
 
 ### Introduction
 
-Introduce the example that you are showing here.
+This is what you will see in the Serial Monitor.
 
 ### Example
 
-Present the example here. Include visuals to help better understanding
+```
+Humidity: 48.00 %  Temperature: 22.00 C
+Humidity: 47.50 %  Temperature: 22.10 C
+```
 
 ### Analysis
 
-Explain how the example used your tutorial topic. Give in-depth analysis of each part and show your understanding of the tutorial topic
+* We wait 2 seconds between readings so the sensor is ready.
+* If the sensor fails, the code prints an error message.
+* The output is easy to read and use in other projects.
 
 ## Additional Resources
 
 ### Useful links
 
-List any sources you used, documentation, helpful examples, similar projects etc.
+* Adafruit DHT Guide: [https://learn.adafruit.com/dht](https://learn.adafruit.com/dht)
+* ESP32 Setup Guide: [https://docs.espressif.com/projects/arduino-esp32](https://docs.espressif.com/projects/arduino-esp32)
+* DHT11 Datasheet
