@@ -152,8 +152,8 @@ This is what you will see in the Serial Monitor.
 ### Example
 
 ```
-Humidity: 48.00 %  Temperature: 22.00 C
-Humidity: 47.50 %  Temperature: 22.10 C
+Humidity: 38.21 %  Temperature: 22.17 C
+Humidity: 37.30 %  Temperature: 22.11 C
 ```
 
 ### Analysis
